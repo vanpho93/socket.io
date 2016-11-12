@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello</title>
+    <script src="socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      var socket = io("http://192.168.0.19:3000");
+      socket.on('XAC_NHAN_KET_NOI', function(data){
+
+      });
+
+      socket.on('SERVER_GUI_KET_QUA', function(data){
+        alert(data);
+      });
+
+      function guiThongTin(){
+        var tinNhan = document.getElementById('txtTinNhan').value
+        socket.emit('CLIENT_GUI_TIN', tinNhan);
+      }
+
+      function tinh(){
+        var a = document.getElementById('soA').value;
+        var b = document.getElementById('soB').value;
+
+        socket.emit('TINH_TONG', {soa: a, sob: b});
+      }
+
+      function guiTinNhan(){
+        socket.emit('CLIENT_GUI_TIN_NHAN', document.getElementById('toAll').value);
+      }
+
+      socket.on('SERVER_GUI_TIN_NHAN', function(data){
+        alert(data);
+      });
+    </script>
+  </head>
+  <body>
+    <input type="text" id="toAll" placeholder="Nhap vao tin nhan">
+    <button onclick="guiTinNhan();">Gui</button><br><br>
+
+    <input type="text" id="txtTinNhan" placeholder="Nhap tin nhan">
+    <button onclick="guiThongTin();">Gui</button><br><br>
+
+    <input type="text" id="soA" placeholder="Nhap so A">
+    <input type="text" id="soB" placeholder="Nhap so B">
+    <button onclick="tinh();">Gui</button><br><br>
+
+  </body>
+</html>
